@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanceManager", "FinanceManager\FinanceManager.csproj", "{9C1AC7AC-9EC4-4098-B63E-EB669124E1AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinanceManager", "FinanceManager\FinanceManager.csproj", "{9C1AC7AC-9EC4-4098-B63E-EB669124E1AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanceManager.Model", "FinanceManager.Model\FinanceManager.Model.csproj", "{26E6C4F6-1843-488C-A856-B8F237E9B2E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinanceManager.Model", "FinanceManager.Model\FinanceManager.Model.csproj", "{26E6C4F6-1843-488C-A856-B8F237E9B2E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanceManager.Service", "FinanceManager.Service\FinanceManager.Service.csproj", "{FFF14FA5-0E6A-4B57-A154-C124E5CCA230}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinanceManager.Service", "FinanceManager.Service\FinanceManager.Service.csproj", "{FFF14FA5-0E6A-4B57-A154-C124E5CCA230}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanceManager.Repository", "FinanceManager.Repository\FinanceManager.Repository.csproj", "{E555401C-C4AA-41D1-B6A3-2B4B842A265A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinanceManager.Repository", "FinanceManager.Repository\FinanceManager.Repository.csproj", "{E555401C-C4AA-41D1-B6A3-2B4B842A265A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanceManager.Config", "FinanceManager.Config\FinanceManager.Config.csproj", "{B67D2BC7-8524-40A3-B58D-3063BEAAFA93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinanceManager.Config", "FinanceManager.Config\FinanceManager.Config.csproj", "{B67D2BC7-8524-40A3-B58D-3063BEAAFA93}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{6AF55AFC-E10B-4242-930E-90F3A7083C71}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{B67D2BC7-8524-40A3-B58D-3063BEAAFA93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B67D2BC7-8524-40A3-B58D-3063BEAAFA93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B67D2BC7-8524-40A3-B58D-3063BEAAFA93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AF55AFC-E10B-4242-930E-90F3A7083C71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AF55AFC-E10B-4242-930E-90F3A7083C71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AF55AFC-E10B-4242-930E-90F3A7083C71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AF55AFC-E10B-4242-930E-90F3A7083C71}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

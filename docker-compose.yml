@@ -1,0 +1,6 @@
+services:
+  financemanager:
+    image: ${DOCKER_REGISTRY-}financemanager
+    build:
+      context: .
+      dockerfile: FinanceManager/Dockerfile
