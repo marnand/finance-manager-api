@@ -6,4 +6,18 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Class1.cs" />
+    <Compile Remove="Interfaces\IBaseRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.35" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FinanceManager.Config\FinanceManager.Config.csproj" />
+    <ProjectReference Include="..\FinanceManager.Model\FinanceManager.Model.csproj" />
+  </ItemGroup>
+
 </Project>
