@@ -23,4 +23,10 @@ public class UserRepository(DatabaseConnectionFactory connection)
             : "SELECT * FROM \"User\" where Id = @id";
         return await QueryAsync<User>(commandSql, new { id });
     }
+
+    public async Task<User> GetByEmail(string email)
+    {
+        const string commandSql = "SELECT * FROM \"User\" where Email = @email";
+        return await QuerySingleOrDefaultAsync<User>(commandSql, new { email });
+    }
 }
