@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinanceManager.Config", "Fi
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{6AF55AFC-E10B-4242-930E-90F3A7083C71}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinanceManager.Tests", "FinanceManager.Tests\FinanceManager.Tests.csproj", "{A39E338F-D1D2-4670-8121-A3157D538522}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{6AF55AFC-E10B-4242-930E-90F3A7083C71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6AF55AFC-E10B-4242-930E-90F3A7083C71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6AF55AFC-E10B-4242-930E-90F3A7083C71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A39E338F-D1D2-4670-8121-A3157D538522}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A39E338F-D1D2-4670-8121-A3157D538522}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A39E338F-D1D2-4670-8121-A3157D538522}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A39E338F-D1D2-4670-8121-A3157D538522}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -3,7 +3,7 @@ using System.Text;
 
 namespace FinanceManager.Service;
 
-internal class PasswordHasher
+public class PasswordHasher
 {
     private const int SaltSize = 16; // Tamanho do salt em bytes
     private const int HashSize = 32; // Tamanho do hash em bytes
@@ -14,7 +14,7 @@ internal class PasswordHasher
     /// </summary>
     /// <param name="password">A senha para ser encriptada.</param>
     /// <returns>Uma string no formato SALT|HASH.</returns>
-    public string HashPassword(string password)
+    public static string HashPassword(string password)
     {
         // Gera um salt aleatório
         byte[] salt = new byte[SaltSize];
@@ -42,7 +42,7 @@ internal class PasswordHasher
     /// <param name="password">A senha a ser validada.</param>
     /// <param name="storedHash">O hash armazenado no formato SALT|HASH.</param>
     /// <returns>Verdadeiro se a senha for válida, falso caso contrário.</returns>
-    public (bool, string) VerifyPassword(string password, string storedHash)
+    public static (bool, string) VerifyPassword(string password, string storedHash)
     {
         // Divide o hash armazenado em SALT e HASH
         var parts = storedHash.Split('|');
@@ -64,6 +64,6 @@ internal class PasswordHasher
         // Compara os hashes
         var isValid = CryptographicOperations.FixedTimeEquals(hash, storedPasswordHash);
 
-        return (isValid, isValid ? "sucesso" : "hashes são diferente!");
+        return (isValid, isValid ? "Sucesso!" : "Senha inválida!");
     }
 }
