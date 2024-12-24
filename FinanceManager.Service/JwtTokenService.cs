@@ -1,6 +1,9 @@
-﻿using Microsoft.Extensions.Options;
+﻿using FinanceManager.Model.Control;
+using FinanceManager.Service.Extensions;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 
@@ -39,7 +42,7 @@ public class JwtTokenService(IOptions<JwtSettings> jwtSettings)
     /// <param name="token">Token JWT.</param>
     /// <returns>Um objeto contendo o ID e o Nome do usuário.</returns>
     /// <exception cref="SecurityTokenException">Se o token for inválido ou não puder ser decodificado.</exception>
-    public (string UserId, string UserEmail) GetUserFromToken(string token)
+    public Result<(string UserId, string UserEmail)> GetUserFromToken(string token)
     {
         try
         {
@@ -64,14 +67,16 @@ public class JwtTokenService(IOptions<JwtSettings> jwtSettings)
 
             if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(userEmail))
             {
-                throw new SecurityTokenException("As informações do usuário não foram encontradas no token.");
+                var errorMessage = "As informações do usuário não foram encontradas no token.";
+                return Result<(string UserId, string UserEmail)>.ResultError(errorMessage, HttpStatusCode.Unauthorized);
             }
 
-            return (UserId: userId, UserEmail: userEmail);
+            return Result<(string UserId, string UserEmail)>.Success((UserId: userId, UserEmail: userEmail));
         }
-        catch (Exception ex)
+        catch
         {
-            throw new SecurityTokenException("O token é inválido ou não pôde ser decodificado.", ex);
+            var errorMessage = "O token é inválido ou não pôde ser decodificado.";
+            return Result<(string UserId, string UserEmail)>.ResultError(errorMessage, HttpStatusCode.Unauthorized);
         }
     }
 }

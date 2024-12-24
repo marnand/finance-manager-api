@@ -1,4 +1,5 @@
-﻿using FinanceManager.Model.DTO;
+﻿using FinanceManager.Model;
+using FinanceManager.Model.DTO;
 using FinanceManager.Service;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,9 +21,12 @@ namespace FinanceManager.Controllers
             {
                 var token = HttpContext.Request.Headers.Authorization;
 
-                var (UserId, UserEmail) = _jwtToken.GetUserFromToken(token[0].Split(" ")[1]);
-
-                return new UserDTO(int.Parse(UserId), UserEmail);
+                var result = _jwtToken.GetUserFromToken(token[0].Split(" ")[1]);
+                
+                return result.Match(
+                    onSuccess => new UserDTO(int.Parse(onSuccess.UserId), onSuccess.UserEmail),
+                    onError => new UserDTO(0, string.Empty)
+                );
             }
         }
     }

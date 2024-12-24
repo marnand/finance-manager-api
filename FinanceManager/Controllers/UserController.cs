@@ -68,20 +68,20 @@ public class UserController(IUserService userService, JwtTokenService jwtToken) 
         var result = await _userService.Login(login);
 
         return result.Match<IActionResult>(
-            onSuccess => Ok(new
+            user => Ok(new
             {
-                Token = _jwtToken.GenerateToken(onSuccess.Id.ToString(), onSuccess.Email),
+                Token = _jwtToken.GenerateToken(user.Id.ToString(), user.Email),
                 Message = "Usuário autenticado!"
             }),
-            onError =>
+            error =>
             {
-                if (onError.StatusCode == HttpStatusCode.NotFound)
-                    return NotFound(onError);
+                if (error.StatusCode == HttpStatusCode.NotFound)
+                    return NotFound(error);
 
-                if (onError.StatusCode == HttpStatusCode.Unauthorized)
-                    return Unauthorized(onError);
+                if (error.StatusCode == HttpStatusCode.Unauthorized)
+                    return Unauthorized(error);
 
-                return BadRequest(onError);
+                return BadRequest(error);
             }
         );
     }
