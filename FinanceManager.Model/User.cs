@@ -9,7 +9,7 @@ public partial class User
     public int Id { get; private set; }
     public string Name { get; private set; } = string.Empty;
     public string Email { get; private set; } = string.Empty;
-    public string PasswordHash { get; private set; } = string.Empty;
+    public string Password { get; private set; } = string.Empty;
     public DateTime CreatedAt { get; private set; }
 
     public static Result<User> Create(string name, string email, string pass)
@@ -42,12 +42,12 @@ public partial class User
         {
             Name = name,
             Email = email,
-            PasswordHash = pass,
+            Password = pass,
             CreatedAt = DateTime.Now
         });
     }
 
-    public void SetPasswordHash(string hash) => PasswordHash = hash;
+    public void SetPasswordHash(string hash) => Password = hash;
 
     [GeneratedRegex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.IgnoreCase | RegexOptions.Compiled, "pt-BR")]
     protected static partial Regex EmailRegex();

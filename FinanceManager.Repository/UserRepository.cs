@@ -9,11 +9,9 @@ public class UserRepository(DatabaseConnectionFactory connection)
 {
     public async Task<int> Create(User user)
     {
-        const string commandSql = @"
-                INSERT INTO ""User"" (Name, Email, PasswordHash, CreatedAt) 
-                VALUES (@Name, @Email, @PasswordHash, @CreatedAt)
-                RETURNING Id;
-            ";  
+        const string commandSql = @"INSERT INTO ""User"" (Name, Email, Password, CreatedAt) 
+            VALUES (@Name, @Email, @Password, @CreatedAt) RETURNING Id;
+        ";
         return await ExecuteScalarAsync<int>(commandSql, user);
     }
 

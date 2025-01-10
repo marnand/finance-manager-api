@@ -1,5 +1,4 @@
 ﻿using FinanceManager.Model.Control;
-using FinanceManager.Service.Extensions;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -7,11 +6,11 @@ using System.Net;
 using System.Security.Claims;
 using System.Text;
 
-namespace FinanceManager.Service;
+namespace FinanceManager.Service.Extensions;
 
-public class JwtTokenService(IOptions<JwtSettings> jwtSettings)
+public class JWTToken(IOptions<JWTSettings> jwtSettings)
 {
-    private readonly JwtSettings _jwtSettings = jwtSettings.Value;
+    private readonly JWTSettings _jwtSettings = jwtSettings.Value;
 
     public string GenerateToken(string userId, string email)
     {
@@ -81,7 +80,7 @@ public class JwtTokenService(IOptions<JwtSettings> jwtSettings)
     }
 }
 
-public class JwtSettings
+public class JWTSettings
 {
     public string Secret { get; set; } = string.Empty;
     public string Issuer { get; set; } = string.Empty;

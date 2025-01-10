@@ -1,5 +1,6 @@
-﻿using FinanceManager.Model.DTO;
-using FinanceManager.Service;
+﻿using FinanceManager.Model.Control;
+using FinanceManager.Model.DTO;
+using FinanceManager.Service.Extensions;
 using FinanceManager.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +14,10 @@ namespace FinanceManager.Controllers;
 /// <param name="userService"></param>
 /// <param name="jwtToken"></param>
 [ApiController, Route("api/users")]
-public class UserController(IUserService userService, JwtTokenService jwtToken) : BaseController(jwtToken)
+public class UserController(JWTToken jwtToken, IUserService userService) : BaseController(jwtToken)
 {
+    private readonly JWTToken _jwtToken = jwtToken;
     private readonly IUserService _userService = userService;
-    private readonly JwtTokenService _jwtToken = jwtToken;
 
     /// <summary>
     /// Cadastrar um usuário
@@ -27,11 +28,7 @@ public class UserController(IUserService userService, JwtTokenService jwtToken) 
     public async Task<IActionResult> Create(CreateUserDTO user)
     {
         var result = await _userService.Create(user);
-
-        return result.Match<IActionResult>(
-            onSuccess => CreatedAtAction(nameof(Get), new { onSuccess }, user),
-            onError => BadRequest(onError)
-        );
+        return result.Match<IActionResult>(onSuccess => CreatedAtAction(nameof(Get), new { id = onSuccess.Data }, onSuccess), BadRequest);
     }
 
     /// <summary>
@@ -44,10 +41,7 @@ public class UserController(IUserService userService, JwtTokenService jwtToken) 
     public async Task<IActionResult> Get(int id = 0)
     {
         var result = await _userService.Get(id);
-        return result.Match<IActionResult>(
-            onSuccess => Ok(id > 0 ? onSuccess.FirstOrDefault() : onSuccess),
-            onError => BadRequest(onError)
-        );
+        return result.Match<IActionResult>(Ok, BadRequest);
     }
 
     /// <summary>
@@ -66,23 +60,14 @@ public class UserController(IUserService userService, JwtTokenService jwtToken) 
     public async Task<IActionResult> Login(LoginDTO login)
     {
         var result = await _userService.Login(login);
+        return result.Match(Ok, ErrorHandle);
+    }
 
-        return result.Match<IActionResult>(
-            user => Ok(new
-            {
-                Token = _jwtToken.GenerateToken(user.Id.ToString(), user.Email),
-                Message = "Usuário autenticado!"
-            }),
-            error =>
-            {
-                if (error.StatusCode == HttpStatusCode.NotFound)
-                    return NotFound(error);
+    private IActionResult ErrorHandle(Result<string> result)
+    {
+        if (result.Error?.StatusCode == HttpStatusCode.NotFound) return NotFound(result);
+        if (result.Error?.StatusCode == HttpStatusCode.Unauthorized) return Unauthorized(result);
 
-                if (error.StatusCode == HttpStatusCode.Unauthorized)
-                    return Unauthorized(error);
-
-                return BadRequest(error);
-            }
-        );
+        return BadRequest(result);
     }
 }
