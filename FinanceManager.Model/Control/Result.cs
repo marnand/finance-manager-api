@@ -33,6 +33,6 @@ public class Result<T>
         public HttpStatusCode StatusCode { get; set; }
     }
 
-    public TResult Match<TResult>(Func<T, TResult> onSuccess, Func<ErrorDetails, TResult> onError)
-        => IsSuccess ? onSuccess(Data) : onError(Error);
+    public TResult Match<TResult>(Func<Result<T>, TResult> onSuccess, Func<Result<T>, TResult> onError)
+        => IsSuccess ? onSuccess(new Result<T>(Data!)) : onError(new Result<T>(Error!));
 }

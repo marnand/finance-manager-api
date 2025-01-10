@@ -2,13 +2,15 @@
 using FinanceManager.Model.Control;
 using FinanceManager.Model.DTO;
 using FinanceManager.Repository.Interfaces;
+using FinanceManager.Service.Extensions;
 using FinanceManager.Service.Interfaces;
 using System.Net;
 
 namespace FinanceManager.Service;
 
-internal class UserService(IUserRepository userRepository) : IUserService
+internal class UserService(JWTToken jwtToken, IUserRepository userRepository) : IUserService
 {
+    private readonly JWTToken _jwtToken = jwtToken;
     private readonly IUserRepository _userRepository = userRepository;
 
     public async Task<Result<int>> Create(CreateUserDTO user)
@@ -22,16 +24,16 @@ internal class UserService(IUserRepository userRepository) : IUserService
         return Result<int>.Success(await _userRepository.Create(result.Data));
     }
 
-    public async Task<Result<User>> Login(LoginDTO login)
+    public async Task<Result<string>> Login(LoginDTO login)
     {
-        var user = await _userRepository.GetByEmail(login.Email); 
-        
-        if (user is null) return Result<User>.ResultError("Usuário não encontrado!", HttpStatusCode.NotFound);        
+        var dbUser = await _userRepository.GetByEmail(login.Email); 
+        if (dbUser is null) return Result<string>.ResultError("Usuário não encontrado!", HttpStatusCode.NotFound);        
 
-        var (isValid, message) = PasswordHasher.VerifyPassword(login.Password, user.PasswordHash);
-        if (!isValid) return Result<User>.ResultError(message, HttpStatusCode.Unauthorized);
+        var (isValid, message) = PasswordHasher.VerifyPassword(login.Password, dbUser.Password);
+        if (!isValid) return Result<string>.ResultError(message, HttpStatusCode.Unauthorized);
 
-        return Result<User>.Success(user);
+        var token = _jwtToken.GenerateToken(dbUser.Id.ToString(), dbUser.Email);
+        return Result<string>.Success(token);
     }
 
     public async Task<Result<IEnumerable<User>>> Get(int id)

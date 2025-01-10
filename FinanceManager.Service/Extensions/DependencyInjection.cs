@@ -12,7 +12,7 @@ public static class DependencyInjection
     {
         services.AddSingleton<DatabaseConnectionFactory>();
 
-        services.AddScoped<JwtTokenService>();
+        services.AddScoped<JWTToken>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IAccountService, AccountService>();
         

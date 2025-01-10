@@ -1,5 +1,6 @@
 using FinanceManager.Model;
 using FinanceManager.Service;
+using FinanceManager.Service.Extensions;
 using FluentAssertions;
 using Microsoft.Extensions.Options;
 using System.Net;
@@ -8,11 +9,11 @@ namespace FinanceManager.Tests;
 
 public class UserServiceTest
 {
-    private JwtTokenService _jwtTokenService;
+    private JWTToken _jwtTokenService;
 
     public UserServiceTest()
     {
-        var jwtSettings = Options.Create(new JwtSettings
+        var jwtSettings = Options.Create(new JWTSettings
         {
             Secret = "test173secret496749agvelk5y1se8s56s8w8", // Deve ser suficientemente longo para HmacSha256
             Issuer = "TestIssuer",
@@ -21,7 +22,7 @@ public class UserServiceTest
         });
 
         // Instancia o JwtTokenService com as configurações mock
-        _jwtTokenService = new JwtTokenService(jwtSettings);
+        _jwtTokenService = new JWTToken(jwtSettings);
     }
 
     [Theory]
@@ -37,7 +38,7 @@ public class UserServiceTest
         resultUser.Data!.SetPasswordHash(passHash);
 
         // Act
-        var (isValid, message) = PasswordHasher.VerifyPassword(pass, resultUser.Data.PasswordHash);
+        var (isValid, message) = PasswordHasher.VerifyPassword(pass, resultUser.Data.Password);
 
         var token = _jwtTokenService.GenerateToken(userId.ToString(), resultUser.Data.Email);
         var resultToken = _jwtTokenService.GetUserFromToken(token);
