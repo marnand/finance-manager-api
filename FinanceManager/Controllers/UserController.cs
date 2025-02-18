@@ -13,7 +13,7 @@ namespace FinanceManager.Controllers;
 /// </summary>
 /// <param name="userService"></param>
 /// <param name="jwtToken"></param>
-[ApiController, Route("api/users")]
+[ApiController, Route("api/v1/users")]
 public class UserController(JWTToken jwtToken, IUserService userService) : BaseController(jwtToken)
 {
     private readonly JWTToken _jwtToken = jwtToken;

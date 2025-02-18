@@ -13,10 +13,12 @@ public static class DependencyInjection
         services.AddSingleton<DatabaseConnectionFactory>();
 
         services.AddScoped<JWTToken>();
+        services.AddScoped<ITransactionService, TransactionService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IAccountService, AccountService>();
         
         services.AddScoped<IAccountRepository, AccountRepository>();
+        services.AddScoped<ITransactionRepository, TransactionRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
     }
 }

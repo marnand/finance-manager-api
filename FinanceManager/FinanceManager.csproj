@@ -11,7 +11,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<Compile Remove="Controllers\AccountController.cs" />
 		<Compile Remove="Controllers\WeatherForecastController.cs" />
+		<Compile Remove="Middleware\CustomAuthorizeAttribute.cs" />
+		<Compile Remove="Middleware\Response.cs" />
 		<Compile Remove="Middleware\ValidateUser.cs" />
 		<Compile Remove="WeatherForecast.cs" />
 	</ItemGroup>

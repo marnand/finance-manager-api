@@ -22,11 +22,11 @@ public class Request(RequestDelegate next)
         catch (Exception ex)
         {
             httpContext.Response.ContentType = "application/json";
-            httpContext.Response.StatusCode = 401;
+            httpContext.Response.StatusCode = 500;
             httpContext.Response?.WriteAsJsonAsync(new
             {
-                Status = 401,
-                Message = ex?.Message ?? "Acesso negado!"
+                Status = 500,
+                Message = ex?.Message ?? "Erro no servidor!"
             });
         }        
     }
