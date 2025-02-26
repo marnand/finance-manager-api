@@ -4,8 +4,6 @@ services:
     build:
       context: .
       dockerfile: FinanceManager/Dockerfile
-    environment: 
-      - ConnectionStrings:DefaultConnection=${CONNECTIONSTRING}
     networks:
       - finance-network
   
