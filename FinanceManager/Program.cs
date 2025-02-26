@@ -12,6 +12,8 @@ builder.Services.Configure<JWTSettings>(builder.Configuration.GetSection("JWTSet
 builder.Services.Configure<Database>(builder.Configuration.GetSection("ConnectionStrings"));
 builder.Services.AddDependencies();
 
+var test = builder.Configuration.GetSection("ConnectionStrings");
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -72,14 +74,15 @@ app.UseMiddleware<Request>();
 
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
+//if (app.Environment.IsDevelopment())
+//{
+var env = app.Environment.IsDevelopment();
+app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Finance Manager v1");
     });
-}
+//}
 
 app.UseHttpsRedirection();
 
