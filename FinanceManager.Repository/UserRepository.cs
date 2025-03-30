@@ -16,8 +16,8 @@ public class UserRepository(DatabaseConnectionFactory connection)
 
     public async Task<IEnumerable<User>> Get(int id)
     {
-        string commandSql = id == 0 ? "SELECT * FROM users"
-            : "SELECT * FROM users where Id = @id";
+        string commandSql = id == 0 ? "SELECT id, name, email, password, created_at as createdat FROM users"
+            : "SELECT id, name, email, password, created_at as createdat FROM users where Id = @id";
         return await QueryAsync<User>(commandSql, new { id });
     }
 

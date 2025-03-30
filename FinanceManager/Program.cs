@@ -9,13 +9,17 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<JWTSettings>(builder.Configuration.GetSection("JWTSettings"));
-builder.Services.Configure<Database>(builder.Configuration.GetSection("ConnectionStrings"));
+
+builder.Configuration.AddEnvironmentVariables();
+var connectionStringLocal = builder.Configuration.GetSection("ConnectionString:DefaultConnection").Value;
+var currentConnectionString = builder.Configuration["DATABASE_URL"] ?? connectionStringLocal;
+builder.Services.Configure<Database>(options => { options.DefaultConnection = currentConnectionString ?? ""; });
+
 builder.Services.AddDependencies();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -65,6 +69,7 @@ builder.Services.AddSwaggerGen(c =>
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
 });
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
@@ -88,5 +93,6 @@ app.UseAuthorization();
 app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
 app.MapControllers();
+app.MapHealthChecks("/health");
 
 app.Run();

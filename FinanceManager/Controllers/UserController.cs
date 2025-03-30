@@ -45,16 +45,6 @@ public class UserController(JWTToken jwtToken, IUserService userService) : BaseC
     }
 
     /// <summary>
-    /// Check point
-    /// </summary>
-    /// <returns></returns>
-    [HttpGet("check")]
-    public IActionResult Check()
-    {
-        return Ok("Tudo certo");
-    }
-
-    /// <summary>
     /// Realiza login
     /// </summary>
     /// <param name="login">Email e senha</param>
