@@ -1,6 +1,6 @@
 ﻿using FinanceManager.Model.Control;
-using System.Text.RegularExpressions;
 using System.Net;
+using System.Text.RegularExpressions;
 
 namespace FinanceManager.Model;
 
